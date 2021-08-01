@@ -13,7 +13,7 @@ import {
 export const getCurrentProfile = () => async dispatch => {
     dispatch({ type: CLEAR_PROFILE })
     try {
-        const res = await axios.get('http://localhost:5000/api/v1/profile/me');
+        const res = await axios.get('https://mern-stack-blog-miman.herokuapp.com/api/v1/profile/me');
         dispatch({
             type: GET_PROFILE,
             payload:res.data
@@ -32,7 +32,7 @@ export const getCurrentProfile = () => async dispatch => {
 export const getProfiles = () => async dispatch => {
     dispatch({ type: CLEAR_PROFILE })
     try {
-        const res = await axios.get('http://localhost:5000/api/v1/profile');
+        const res = await axios.get('https://mern-stack-blog-miman.herokuapp.com/api/v1/profile');
         dispatch({
             type: GET_PROFILES,
             payload:res.data
@@ -51,7 +51,7 @@ export const getProfiles = () => async dispatch => {
 export const getProfileById = userId => async dispatch => {
     dispatch({ type: CLEAR_PROFILE })
     try {
-        const res = await axios.get(`http://localhost:5000/api/v1/profile/user/${userId}`);
+        const res = await axios.get(`https://mern-stack-blog-miman.herokuapp.com/api/v1/profile/user/${userId}`);
         dispatch({
             type: GET_PROFILE,
             payload:res.data
@@ -69,7 +69,7 @@ export const getProfileById = userId => async dispatch => {
 //=== Get github repos
 export const getGithubRepos= username => async dispatch => {
     try {
-        const res = await axios.get(`http://localhost:5000/api/v1/profile/github/${username}`);
+        const res = await axios.get(`https://mern-stack-blog-miman.herokuapp.com/api/v1/profile/github/${username}`);
         dispatch({
             type: GET_REPOS,
             payload:res.data
@@ -93,7 +93,7 @@ export const createProfile = (formData, history, edit = false ) => async dispatc
                 'Content-Type': 'application/json'
             }
         }
-        const res = await axios.post('http://localhost:5000/api/v1/profile', formData, config);
+        const res = await axios.post('https://mern-stack-blog-miman.herokuapp.com/api/v1/profile', formData, config);
         dispatch({
             type: GET_PROFILE,
             payload: res.data
@@ -121,7 +121,7 @@ export const addExperience = (formData, history ) => async dispatch => {
                 'Content-Type': 'application/json'
             }
         }
-        const res = await axios.put('http://localhost:5000/api/v1/profile/experience', formData, config);
+        const res = await axios.put('https://mern-stack-blog-miman.herokuapp.com/api/v1/profile/experience', formData, config);
         dispatch({
             type: UPDATE_PROFILE,
             payload: res.data
@@ -146,7 +146,7 @@ export const addEducation = (formData, history ) => async dispatch => {
                 'Content-Type': 'application/json'
             }
         }
-        const res = await axios.put('http://localhost:5000/api/v1/profile/education', formData, config)
+        const res = await axios.put('https://mern-stack-blog-miman.herokuapp.com/api/v1/profile/education', formData, config)
         dispatch({
             type: UPDATE_PROFILE,
             payload: res.data
@@ -166,7 +166,7 @@ export const addEducation = (formData, history ) => async dispatch => {
 // Delete experience
 export const deleteExperience = (id) => async (dispatch) => {
     try {
-      const res = await axios.delete(`http://localhost:5000/api/v1/profile/experience/${id}`);
+      const res = await axios.delete(`https://mern-stack-blog-miman.herokuapp.com/api/v1/profile/experience/${id}`);
       dispatch({
         type: UPDATE_PROFILE,
         payload: res.data
@@ -184,7 +184,7 @@ export const deleteExperience = (id) => async (dispatch) => {
   // Delete education
   export const deleteEducation = (id) => async (dispatch) => {
     try {
-      const res = await axios.delete(`http://localhost:5000/api/v1/profile/education/${id}`);
+      const res = await axios.delete(`https://mern-stack-blog-miman.herokuapp.com/api/v1/profile/education/${id}`);
       dispatch({
         type: UPDATE_PROFILE,
         payload: res.data

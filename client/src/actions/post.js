@@ -14,7 +14,7 @@ import {
 //===Get posts
 export const getPosts = () => async dispatch => {
     try {
-        const res = await axios.get('http://localhost:5000/api/v1/post');
+        const res = await axios.get('https://mern-stack-blog-miman.herokuapp.com/api/v1/post');
 
         dispatch({
             type: GET_POSTS,
@@ -33,7 +33,7 @@ export const getPosts = () => async dispatch => {
 //===Get a single post by id
 export const getPost = id => async dispatch => {
     try {
-        const res = await axios.get(`http://localhost:5000/api/v1/post/${id}`);
+        const res = await axios.get(`https://mern-stack-blog-miman.herokuapp.com/api/v1/post/${id}`);
         
         dispatch({
             type: GET_POST,
@@ -52,7 +52,7 @@ export const getPost = id => async dispatch => {
 //=== Add likes 
 export const addLike = id => async dispatch => {
     try {
-        const res = await axios.put(`http://localhost:5000/api/v1/post/like/${id}`);
+        const res = await axios.put(`https://mern-stack-blog-miman.herokuapp.com/api/v1/post/like/${id}`);
         dispatch({
             type: UPDATE_LIKES,
             payload: { id, likes: res.data.data }
@@ -69,7 +69,7 @@ export const addLike = id => async dispatch => {
 //=== Unlike post 
 export const removeLike = id => async dispatch => {
     try {
-        const res = await axios.put(`http://localhost:5000/api/v1/post/unlike/${id}`);
+        const res = await axios.put(`https://mern-stack-blog-miman.herokuapp.com/api/v1/post/unlike/${id}`);
         dispatch({
             type: UPDATE_LIKES,
             payload: { id, likes: res.data.data }
@@ -87,7 +87,7 @@ export const removeLike = id => async dispatch => {
 //====Delete Post
 export const deletePost = id => async dispatch => {
     try {
-       await axios.delete(`http://localhost:5000/api/v1/post/${id}`);
+       await axios.delete(`https://mern-stack-blog-miman.herokuapp.com/api/v1/post/${id}`);
         dispatch({
             type: DELETE_POST,
             payload: id
@@ -112,7 +112,7 @@ export const addPost = formData => async dispatch => {
         }
     }
     try {
-       const res = await axios.post(`http://localhost:5000/api/v1/post`, formData, config);
+       const res = await axios.post(`https://mern-stack-blog-miman.herokuapp.com/api/v1/post`, formData, config);
        
         dispatch({
             type: ADD_POST,
@@ -138,7 +138,7 @@ export const addComment = (id, formData) => async dispatch => {
         }
     }
     try {
-       const res = await axios.post(`http://localhost:5000/api/v1/post/comment/${id}`, formData, config);
+       const res = await axios.post(`https://mern-stack-blog-miman.herokuapp.com/api/v1/post/comment/${id}`, formData, config);
         dispatch({
             type: ADD_COMMENT,
             payload: res.data.newComment
@@ -157,7 +157,7 @@ export const addComment = (id, formData) => async dispatch => {
 ///=== Delete Comment(Review) to a post
 export const deleteComment = (postId, commentId) => async dispatch => {
     try {
-        await axios.delete(`http://localhost:5000/api/v1/post/comment/${postId}/${commentId}`);
+        await axios.delete(`https://mern-stack-blog-miman.herokuapp.com/api/v1/post/comment/${postId}/${commentId}`);
         dispatch({
             type: REMOVE_COMMENT,
             payload: commentId

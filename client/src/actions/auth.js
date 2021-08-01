@@ -17,7 +17,8 @@ export const loadUser = () => async dispatch => {
         setAuthtoken(localStorage.token);
     }
     try {
-        const res = await axios.get('http://localhost:5000/api/v1/users/auth');
+        // const res = await axios.get('https://mern-stack-blog-miman.herokuapp.com/api/v1/users/auth');
+        const res = await axios.get('https://mern-stack-blog-miman.herokuapp.com/api/v1/users/auth');
         dispatch({
             type: USER_LOADED,
             payload: res.data
@@ -39,7 +40,7 @@ export const register = (newUser) => async dispatch => {
     const body = JSON.stringify(newUser);
 
     try {
-        const res = await axios.post('http://localhost:5000/api/v1/users/signup', body, config);
+        const res = await axios.post('https://mern-stack-blog-miman.herokuapp.com/api/v1/users/signup', body, config);
         dispatch({
             type: REGISTER_SUCCESS,
             payload: res.data
@@ -66,7 +67,7 @@ export const login = (email, password) => async dispatch => {
     const body = JSON.stringify({email, password});
 
     try {
-        const res = await axios.post('http://localhost:5000/api/v1/users/login', body, config);
+        const res = await axios.post('https://mern-stack-blog-miman.herokuapp.com/api/v1/users/login', body, config);
         dispatch({
             type: LOGIN_SUCCESS,
             payload: res.data
