@@ -12,7 +12,10 @@ import { getProfileById } from '../../actions/profile';
 
 const Profile = ({ getProfileById, profile: { profile }, auth, match }) => {
   useEffect(() => {
+    console.log("match.params.id:", match.params.id)
     getProfileById(match.params.id);
+
+    console.log("Profile:", profile)
   }, [getProfileById, match.params.id]);
   return (
     <Fragment>
@@ -32,11 +35,11 @@ const Profile = ({ getProfileById, profile: { profile }, auth, match }) => {
             )}
           <div className="profile-grid my-1">
             <ProfileTop profile={profile} />
-
             <ProfileAbout profile={profile} />
 
             <div className="profile-exp bg-white p-2">
               <h2 className="text-primary">Experience</h2>
+
               {profile.experience.length > 0 ? (
                 <Fragment>
                   <h1>Experiences</h1>
@@ -68,7 +71,6 @@ const Profile = ({ getProfileById, profile: { profile }, auth, match }) => {
                 <h4>No education credentials</h4>
               )}
             </div>
-           { console.log("githubUserName:", profile.githubUsername) }
 
             {profile.githubUsername && (
               <ProfileGithub username={profile.githubUsername} />

@@ -49,10 +49,6 @@ export const register = (newUser) => async dispatch => {
 
       } catch (err) {
            console.error(err);
-        //   const errors = err.response.data.errors;
-        //   if(errors){
-        //       errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));
-        //   }
         dispatch({
             type: REGISTER_FAIL
         })
@@ -89,6 +85,9 @@ export const login = (email, password) => async dispatch => {
 
 //Logout and clear profile
 export const logout = () => dispatch => {
+    dispatch({
+        type: CLEAR_PROFILE
+    })
     dispatch({
         type: LOGOUT
     })

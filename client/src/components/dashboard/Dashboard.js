@@ -21,7 +21,7 @@ const Dashboard = ({ getCurrentProfile, auth: { user }, profile: { profile, load
         loading && profile === null ? <Spinner /> : <Fragment>
             <h1 className="large text-primary">Dashboard </h1>
             <p className="lead">
-                <i className="fas fa-user"> Welcome {user && user.name } </i>
+                <i className="fas fa-user"> Welcome { user && user.name } </i>
             </p>
             { 
             profile !== null ? <Fragment>
@@ -29,10 +29,10 @@ const Dashboard = ({ getCurrentProfile, auth: { user }, profile: { profile, load
                     <Experience experience={ profile.experience } />
                     <Education education={ profile.education } />
                  </Fragment> : 
-            <Fragment>
-                <p>You do not have a profile. Please create a profile by adding some Info</p>
-                <Link to="/create-profile" className="btn btn-primary my-1"> Create Profile </Link>
-             </Fragment> 
+                <Fragment>
+                    <p>You do not have a profile. Please create a profile by adding some Info</p>
+                    <Link to="/create-profile" className="btn btn-primary my-1"> Create Profile </Link>
+                </Fragment> 
             }
         </Fragment>
     )
