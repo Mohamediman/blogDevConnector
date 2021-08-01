@@ -1,16 +1,21 @@
 import React, { Fragment, useState } from 'react'
-import { Link } from 'react-router-dom'
-import axios from 'axios'
+import { Link, Redirect } from 'react-router-dom'
+import PropTypes from 'prop-types'
 
-const Register = () => {
+
+import { connect } from 'react-redux'
+import { setAlert } from './../../actions/SetAlert'
+import { register } from './../../actions/auth'
+
+const Register = ({ setAlert, register, isAuthenticated }) => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     password: '',
-    password2: ''
+    confirmPassword: ''
   })
 
-  const { name, email, password, password2 } = formData;
+  const { name, email, password, confirmPassword } = formData;
 
   const onChange = e => {
     setFormData({...formData, [e.target.name]: e.target.value })
@@ -18,30 +23,16 @@ const Register = () => {
 
   const onSubmit = async e => {
     e.preventDefault();
-
-    if(password !== password2){
-      console.log("The Passwords do not match")
+    if(password !== confirmPassword){
+      setAlert("the passwords do not match", "danger");
     } else {
-      const newUser = {
-        name,
-        email,
-        password
-      };
-
-      try {
-        const config = {
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        }
-        const body = JSON.stringify(newUser);
-        const res = await axios.post('/api/v1/users', body, config);
-        console.log(res);
-
-      } catch (err) {
-        console.error(err)
-      }
+      const newUser = {name, email, password, confirmPassword }
+      register(newUser)
     }
+  }
+
+  if(isAuthenticated){
+    return <Redirect to="/dashboard" />
   }
 
     return (
@@ -72,8 +63,8 @@ const Register = () => {
           <input
             type="password"
             placeholder="Confirm Password"
-            name="password2"
-            value={password2} onChange={e => onChange(e)} 
+            name="confirmPassword"
+            value={confirmPassword} onChange={e => onChange(e)} 
             minLength="6"
           />
         </div>
@@ -86,4 +77,13 @@ const Register = () => {
     )
 }
 
-export default Register
+Register.propTypes = {
+  register: PropTypes.func.isRequired,
+  setAlert: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool,
+}
+const mapStateToProps = state => ({
+  isAuthenticated: state.auth.isAuthenticated
+})
+
+export default connect(mapStateToProps, { setAlert, register })(Register)

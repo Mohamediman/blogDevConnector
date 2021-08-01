@@ -12,9 +12,7 @@ exports.addPost = async (req, res) => {
 
         res.status(201).json({
             status: 'Success',
-            data: {
-                post
-            }
+            post
         })
     } catch (err) {
         console.error(err.message)
@@ -28,14 +26,12 @@ exports.addPost = async (req, res) => {
 //==== Get all the posts
 exports.getAllPosts = async (req, res) => {
     try {
-        const posts = await Post.find();
+        const posts = await Post.find().populate({ path: 'reviews'});
 
         res.status(200).json({
             status: 'Success',
             results: posts.length,
-            data: {
-                posts
-            }
+            posts
         })
     } catch (err) {
         console.error(err.message)
@@ -57,9 +53,7 @@ exports.getPost = async (req, res) => {
 
         res.status(200).json({
             status: 'Success',
-            data: {
-                post
-            }
+            post
         })
     } catch (err) {
         console.error(err.message);
@@ -91,6 +85,7 @@ exports.likePost = async (req, res) => {
     try {
         //==== Get the post first
         const post = await Post.findById(req.params.postID);
+        console.log("Post found::", post)
 
         if(!post){
             return res.status(404).json({ msg: "No Post found for that Id"})
@@ -110,9 +105,7 @@ exports.likePost = async (req, res) => {
 
         res.status(200).json({
             status: 'Success',
-            data: {
-                data: post.likes
-                }
+             data: post.likes
         });
         
     } catch (err) {
@@ -150,9 +143,7 @@ exports.unLikePost = async (req, res) => {
 
         res.status(200).json({
             status: 'Success',
-            data: {
-                data: post.likes
-                }
+            data: post.likes
         });
         
     } catch (err) {
@@ -178,9 +169,7 @@ exports.addComment = async (req, res) => {
 
         res.status(201).json({
             status: 'Success',
-            data: {
-                newComment
-            }
+            newComment
         })
 
         } catch (err) {
@@ -207,9 +196,7 @@ exports.deleteComment = async (req, res) => {
 
          res.status(200).json({
              status: 'Success',
-             data: {
-                 post: post.reviews
-             }
+             post: post.reviews
          })
 
     } catch (err) {

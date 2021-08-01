@@ -3,12 +3,16 @@ const helmet = require('helmet');
 const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
 const hpp = require('hpp');
+var cors = require('cors')
+
+const app = express();
+
+app.use(cors())
 
 const UsersRoutes = require('./routes/usersRoutes');
 const ProfileRoutes = require('./routes/profileRoutes');
 const PostRoutes = require('./routes/postRoutes');
 
-const app = express();
 
 //app.use(express.json());
 app.use(express.json({ limit: '10kb' }));

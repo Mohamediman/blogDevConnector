@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const ProfileSchema = new mongoose.Schema({
     user: {
         type: mongoose.Schema.ObjectId,
-        ref: 'user',
+        ref: 'User',
        required: [true, 'A Profile must belong to a user']
     },
     company: String,
@@ -73,8 +73,19 @@ const ProfileSchema = new mongoose.Schema({
         default: Date.now
     }
 
+},
+{
+    toJSON: {virtuals: true},
+    toObject: {virtuals: true}
 });
 
+
+//===== Virtual Populate to get the Reviews from the Review (Child referencing)
+// ProfileSchema.virtual('user', {
+//     ref: 'User',
+//     foreignField: '_id', //===The name in the Child Model
+//     localField: 'user' //==== The name in this Model (parent)
+// });
 
 const Profile = mongoose.model('Profile', ProfileSchema);
 

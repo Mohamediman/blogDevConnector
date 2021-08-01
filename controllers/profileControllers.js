@@ -1,5 +1,4 @@
-const { body, validationResult } = require('express-validator');
-const { findOneAndUpdate } = require('./../models/ProfileModel');
+const axios = require('axios')
 const Profile = require('./../models/ProfileModel');
 const User = require('./../models/UsersModel');
 
@@ -8,13 +7,13 @@ exports.getMe = async (req, res) => {
         try {
             const profile = await Profile.findOne({ user: req.user.id });
 
-            if(!profile) throw new Error('No Profile for this User');
+            if(!profile)  return res.status(404).json({
+                msg: 'No Profile for that User'
+            })
 
             res.status(200).json({
                 status: 'Success',
-                data: {
-                    profile
-                }
+                profile
             })
 
         } catch (err) {
@@ -51,6 +50,20 @@ exports.createProfile = async (req, res) => {
     if(bio) profileFields.bio = bio;
     if(status) profileFields.status = status;
     if(githubUsername) profileFields.githubUsername = githubUsername;
+
+
+    // Build socialFields object
+    const socialFields = { youtube, twitter, instagram, linkedIn, facebook };
+
+    // normalize social fields to ensure valid url
+    for (const [key, value] of Object.entries(socialFields)) {
+        if (value && value.length > 0)
+        socialFields[key] = value;
+    }
+    // add to profileFields
+    profileFields.social = socialFields;
+
+
     if(skills){
         profileFields.skills = skills.split(',').map(skill => skill.trim());
     }
@@ -89,17 +102,29 @@ exports.createProfile = async (req, res) => {
     }
 }
 
+//==== Get github repos 
+exports.getGithubRepos = async (req, res) => {
+    try {
+        const response = await axios.get(`https://api.github.com/users/${req.params.username}/repos?per_page=5&sort=created:asc`);
+        const githubResponse = response.data;
+
+        res.status(200).json(githubResponse);
+
+      } catch (err) {
+        console.error(err.message);
+        return res.status(404).json({ msg: 'No Github profile found' });
+      }
+}
 //====Get all the profiles
 exports.getAllProfiles = async (req, res) => {
     try {
-        const profiles = await Profile.find();
+        // const profiles = await Profile.find();
+        const profiles = await Profile.find().populate('user', ['name', 'avatar'])
         if(!profiles) throw new Erorr();
         res.status(200).json({
             status: 'success',
             results: profiles.length,
-            data: {
-                profiles
-            }
+            profiles
         })
     } catch (err) {
         console.log(err);
@@ -114,15 +139,13 @@ exports.getAllProfiles = async (req, res) => {
 exports.getProfileByUserId = async(req, res) => {
     const userId = req.params.userId;
     try {
-        const profile = await Profile.findOne({ user: userId });
+        const profile = await Profile.findOne({ user: userId }).populate('user', ['name', 'avatar'])
 
     if(!profile) throw new Error('No user found')
 
     res.status(200).json({
         status: 'success',
-        data: {
-            profile
-        }
+        profile
     })
         
     } catch (err) {
@@ -181,9 +204,7 @@ exports.addExperience = async (req, res) => {
 
         res.status(202).json({
             status: 'Success',
-            data: {
-                profile
-            }
+            profile
         })
     } catch (err) {
         console.error(err);
@@ -211,9 +232,7 @@ exports.removeExperience = async (req, res) => {
 
         res.status(200).json({
             status: 'success',
-            data: {
-                profile
-            }
+            profile
         })
     } catch (err) {
         console.error(err)
@@ -260,9 +279,7 @@ exports.addEducation = async (req, res) => {
 
         res.status(200).json({
             status: 'success',
-            data: {
-                profile
-            }
+             profile
         })
         
     } catch (err) {

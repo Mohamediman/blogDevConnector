@@ -9,17 +9,22 @@ const router = express.Router();
 //====Get the login user's profile
 router.get('/me', authControllers.auth, profileControllers.getMe)
 
+//====Get the user's github profile
+router.get('/github/:username', profileControllers.getGithubRepos)
+
 // Get the profile by the provided userId
 router.get('/user/:userId', profileControllers.getProfileByUserId);
 
 //Add Experiences
 router.put('/experience', authControllers.auth, profileControllers.addExperience)
-//Remove Experience
+
+//Delete Experience
 router.delete('/experience/:expID', authControllers.auth, profileControllers.removeExperience)
 
 //====Add Education
 router.put('/education', authControllers.auth, profileControllers.addEducation)
-//Remove Education
+
+//Delete Education
 router.delete('/education/:eduID', authControllers.auth, profileControllers.removeEducation)
 
 router

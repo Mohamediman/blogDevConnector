@@ -20,11 +20,7 @@ exports.signup = async (req, res) => {
 
     //===Send the token
     res.status(201).json({
-        status: "success",
-        token,
-        data: {
-            newUser
-        }
+        token
     })
         
     } catch (err) {
@@ -56,11 +52,7 @@ exports.login = async (req, res) => {
 
     //Sign in and send the token back
     res.status(201).json({
-        status: "success",
-        token,
-        data: {
-            user
-        }
+        token
     }) 
     } catch (err) {
         console.log(err);
@@ -94,5 +86,13 @@ exports.auth = async (req, res, next) => {
 
     next();
 
+}
+
+//==== GEt the login user
+exports.getLoginUser = async(req, res) => {
+    const user = req.user;
+    res.status(200).json({
+        user
+    })
 }
 
