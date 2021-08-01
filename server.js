@@ -1,3 +1,4 @@
+
 const dotenv = require('dotenv')
 const mongoose = require('mongoose')
 dotenv.config({ path: './config.env'})
@@ -13,10 +14,8 @@ const DBConnect = async () => {
             useFindAndModify: false,
             useUnifiedTopology: true
         });
-        console.log("Data Connected Successfully");
     } catch (err) {
         console.log(err);
-        console.log("Database Connection Fail...");
         process.exit(1);
     }
 }
